@@ -39,3 +39,46 @@ Eine Gemeinde kann eine Stadt sein, ein Dorf, oder mehrere Dörfer, die sich zu 
 Ich habe eine sehr gute Freundin getroffen, die ich seit 10 Jahren nicht mehr getroffen habe!
 Nach eingehender Analyse der verschlüsselten elektronischen Nachrichten korrespondierte der Brief, den der angesehene Linguist verfasste, mit den kunstvollen Semantiken der verwickelten Sprache.
 ```
+
+The difficulty here, I feel, is not the parsing, but the inflection detection. For now, I absolutely have no idea what the best way is for approaching this kind of nlp. chatGPT is definitely ONE of the many answers. We'll see.
+
+# Models
+
+## Parsed Data
+The vocabulary for each day is parsed into the following data structure (example is in TypeScript).
+```ts
+interface DailyVocab {
+    /**
+     * Self-explanatory
+     */
+    date: Date;
+    /**
+     * Word, phrase, sentence, etc.
+     */
+    newTokens: string[];
+    /**
+     * Word, phrase, sentence, etc.
+     */
+    reviewedTokens: string[];
+    /**
+     * All example sentences.
+     */
+    examples: string[];
+}
+```
+
+## Lexer Result
+
+The result of the lexer, this is after the lexer has compared the examples against new and reviewed tokens.
+
+```ts
+// Need a better name for this.
+interface LexerResult {
+    /**
+     * TODO, 
+     * newToken[] + positions[],
+     * reviewedToken[] + positions[],
+     * error[] + positions[]
+     */
+}
+```
