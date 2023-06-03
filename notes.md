@@ -1,6 +1,6 @@
 # Just some things to remind myself while writing.
 
-# Examples from readong json language service
+# Examples from reading json language service
 
 Scanner error type 
 ```ts
@@ -90,6 +90,51 @@ function _scanNext(): Json.SyntaxKind {
 `scanner.scan()`
 ```ts
 // The usual scanner code + basically a lot of edge cases-handling
+// Example of scanNumber
+	function scanNumber(): string {
+		let start = pos;
+        // If 0, it's probably a decimal number, that's why they're skipping the next part and go straight to the dot.
+		if (text.charCodeAt(pos) === CharacterCodes._0) {
+			pos++;
+		} else {
+			pos++;
+            // Eats up all numbers
+			while (pos < text.length && isDigit(text.charCodeAt(pos))) {
+				pos++;
+			}
+		}
+        // Check for dot and then eat up all trailing digit. If there is a dot and no trailing digit, throw an error.
+		if (pos < text.length && text.charCodeAt(pos) === CharacterCodes.dot) {
+			pos++;
+			if (pos < text.length && isDigit(text.charCodeAt(pos))) {
+				pos++;
+				while (pos < text.length && isDigit(text.charCodeAt(pos))) {
+					pos++;
+				}
+			} else {
+				scanError = ScanError.UnexpectedEndOfNumber;
+				return text.substring(start, pos);
+			}
+		}
+		let end = pos;
+        // This checks the 
+		if (pos < text.length && (text.charCodeAt(pos) === CharacterCodes.E || text.charCodeAt(pos) === CharacterCodes.e)) {
+			pos++;
+			if (pos < text.length && text.charCodeAt(pos) === CharacterCodes.plus || text.charCodeAt(pos) === CharacterCodes.minus) {
+				pos++;
+			}
+			if (pos < text.length && isDigit(text.charCodeAt(pos))) {
+				pos++;
+				while (pos < text.length && isDigit(text.charCodeAt(pos))) {
+					pos++;
+				}
+				end = pos;
+			} else {
+				scanError = ScanError.UnexpectedEndOfNumber;
+			}
+		}
+		return text.substring(start, end);
+	}
 ```
 
 json is defined as a tree, but for our case, it should be an array (each day can live freely of the previous day).
