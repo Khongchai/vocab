@@ -1,0 +1,37 @@
+{
+  "name": "vocab",
+  "displayName": "Vocab",
+  "description": "Syntax-highlighting for vocab files",
+  "version": "0.0.1",
+  "engines": {
+    "vscode": "^1.78.0"
+  },
+  "categories": [
+    "Education"
+  ],
+  "contributes": {
+    "languages": [
+      {
+        "id": "vocab",
+        "aliases": [
+          "vocab",
+          "vocab"
+        ],
+        "extensions": [
+          ".vocab"
+        ],
+        "configuration": "./language-configuration.json"
+      }
+    ],
+    "grammars": [
+      {
+        "language": "vocab",
+        "scopeName": "text.vocab",
+        "path": "./syntaxes/vocab.tmLanguage.json"
+      }
+    ]
+  },
+  "devDependencies": {
+    "js-yaml": "^4.1.0"
+  }
+}
