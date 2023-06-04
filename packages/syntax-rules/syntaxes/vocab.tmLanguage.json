@@ -21,7 +21,7 @@
     "date": {
       "patterns": [
         {
-          "comment": "A date of the pattern dd/mm/y+ demarcates a new section. This should be treated like a function by the syntax-highlighter.",
+          "comment": "A date of the pattern dd/mm/y+ demarcates a new section.",
           "match": "(0[1-9]|1[0-9]|2[0-9]|3[0-1])/(0[1-9]|1[0-9]|2[0-9]|3[0-1])/[1-9]([0-9]+)?",
           "name": "variable.language.this.vocab"
         },
