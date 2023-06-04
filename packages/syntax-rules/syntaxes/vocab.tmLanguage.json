@@ -2,23 +2,53 @@
   "name": "vocab",
   "patterns": [
     {
-      "include": "#keywords"
+      "include": "#date"
+    },
+    {
+      "include": "#words-and-phrases"
+    },
+    {
+      "include": "#sentences"
     }
   ],
   "repository": {
-    "keywords": {
+    "date": {
       "patterns": [
         {
-          "name": "keyword.control.vocab",
+          "comment": "A date of the pattern dd/mm/y+ demarcates a new section. This should be treated like a function by the syntax-highlighter.",
+          "match": "(0[1-9]|1[0-9]|2[0-9]|3[0-1])/(0[1-9]|1[0-2])/[1-9]([0-9]+)?",
+          "name": "variable.language.this.vocab"
+        }
+      ]
+    },
+    "words-and-phrases": {
+      "patterns": [
+        {
+          "name": "keyword.control",
           "match": "(?<!>)>>(?!>)|(?<!>)>(?!>)"
         },
         {
           "match": "#.*",
-          "name": "comment.line.number-sign"
+          "name": "comment.line.number-sign.vocab"
         },
         {
-          "match": "(0[1-9]|1[0-9]|2[0-9]|3[0-1])/(0[1-9]|1[0-2])/[1-9]([0-9]+)?",
-          "name": "entity.name.function"
+          "comment": "New words or phrases",
+          "match": "(?<=^>)(?!>).*$",
+          "name": "variable.other.constant.vocab"
+        },
+        {
+          "comment": "Reviewed words or phrases",
+          "match": "(?<=^>>).*$",
+          "name": "variable.other.readwrite.vocab"
+        }
+      ]
+    },
+    "sentences": {
+      "patterns": [
+        {
+          "comment": "This matches everything, so it should be at the very bottom",
+          "match": ".",
+          "name": "string.quoted.other"
         }
       ]
     }
