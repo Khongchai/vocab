@@ -86,22 +86,10 @@
       ]
     },
     "sentences": {
-      "begin": "^(?!((0[1-9]|1[0-9]|2[0-9]|3[0-1])/(0[1-9]|1[0-2])/[1-9]([0-9]+)?|(?<!>)>>(?!>)|(?<!>)>(?!>)))",
-      "beginCaptures": {
-        "0": {
-          "name": "string.quoted.other"
-        }
-      },
-      "end": "[.|?|!]",
-      "endCaptures": {
-        "0": {
-          "name": "string.quoted.other"
-        }
-      },
       "patterns": [
         {
           "comment": "This matches everything, so it should be at the very bottom",
-          "match": ".",
+          "match": ".*",
           "name": "string.quoted.other"
         }
       ]
