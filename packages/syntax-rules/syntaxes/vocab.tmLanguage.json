@@ -55,7 +55,7 @@
           "name": "punctuation.separator.array.vocab"
         },
         {
-          "comment": "Any thing that is not a comma or a space that is a part of a word.",
+          "comment": "Not a comma, not a space, unless it is a part of a word.",
           "match": "(?<=, |> ) ?[^,]+?(?=,|$)",
           "name": "variable.other.constant.vocab"
         }
