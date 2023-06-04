@@ -3,19 +3,10 @@
   "scopeName": "text.vocab",
   "patterns": [
     {
-      "include": "#comment"
-    },
-    {
       "include": "#date"
     },
     {
-      "include": "#new-words-or-phrases"
-    },
-    {
-      "include": "#reviewed-words-or-phrases"
-    },
-    {
-      "include": "#sentences"
+      "include": "#comment"
     }
   ],
   "repository": {
@@ -33,6 +24,15 @@
           "comment": "A date of the pattern dd/mm/y+ demarcates a new section. This should be treated like a function by the syntax-highlighter.",
           "match": "(0[1-9]|1[0-9]|2[0-9]|3[0-1])/(0[1-9]|1[0-9]|2[0-9]|3[0-1])/[1-9]([0-9]+)?",
           "name": "variable.language.this.vocab"
+        },
+        {
+          "include": "#new-words-or-phrases"
+        },
+        {
+          "include": "#reviewed-words-or-phrases"
+        },
+        {
+          "include": "#sentences"
         }
       ]
     },
@@ -81,7 +81,7 @@
         },
         {
           "match": "(?<=, |> ) ?[^,]+?(?=,|$)",
-          "name": "variable.other.readwrite.vocab"
+          "name": "storage.type.vocab"
         }
       ]
     },
