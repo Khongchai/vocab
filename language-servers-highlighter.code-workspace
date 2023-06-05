@@ -1,0 +1,11 @@
+{
+  "folders": [
+    {
+      "path": "packages/language-servers/node"
+    },
+    {
+      "path": "packages/syntax-rules"
+    }
+  ],
+  "settings": {}
+}

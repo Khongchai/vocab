@@ -13,12 +13,9 @@
     "languages": [
       {
         "id": "vocab",
-        "aliases": [
-          "vocab",
-          "vocab"
-        ],
         "extensions": [
-          ".vocab"
+          ".vocab",
+          ".vocab.de"
         ],
         "configuration": "./language-configuration.json"
       }
