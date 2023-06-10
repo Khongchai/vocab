@@ -4,7 +4,7 @@
  * ------------------------------------------------------------------------------------------ */
 
 import * as path from "path";
-import { workspace, ExtensionContext } from "vscode";
+import { workspace, ExtensionContext, languages } from "vscode";
 
 import {
   LanguageClient,
@@ -15,6 +15,7 @@ import {
 
 let client: LanguageClient;
 
+// This method is called when vscode is activated.
 export function activate(context: ExtensionContext) {
   // The server is implemented in node
   const serverModule = context.asAbsolutePath(
@@ -28,12 +29,16 @@ export function activate(context: ExtensionContext) {
     debug: {
       module: serverModule,
       transport: TransportKind.ipc,
+      options: {
+        execArgv: [
+          "--nolazy",
+          "--inspect=" + (6000 + Math.round(Math.random() * 999)),
+        ],
+      },
     },
   };
 
-  // Options to control the language client
   const clientOptions: LanguageClientOptions = {
-    // Register the server for plain text documents
     documentSelector: [{ scheme: "file", language: "vocab" }],
     synchronize: {
       // Notify the server about file changes to '.clientrc files contained in the workspace
@@ -41,7 +46,6 @@ export function activate(context: ExtensionContext) {
     },
   };
 
-  // Create the language client and start the client.
   client = new LanguageClient(
     "vocab",
     "vocab language server",

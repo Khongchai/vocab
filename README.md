@@ -7,7 +7,7 @@ The vocab file extension proposes a specific, human-and-machine readable syntax 
 
 Eventually, this repo will contains the full specs, the language server, and the _vocab_ to _json_ parser.
 
-For now, the only thing being worked on is the vocab extension for the German language.
+All vocab files share the same syntax highlighter (vocab.de, vocab.en, vocab.*), the semantics of each langauge get processed instead in the langauge server.
 
 # Sample Syntax
 

@@ -7,7 +7,7 @@
     {
       "type": "extensionHost",
       "request": "launch",
-      "name": "Server and Highlighter",
+      "name": "Vocab Debug",
       "runtimeExecutable": "${execPath}",
       "args": [
         "--extensionDevelopmentPath=${workspaceRoot}/packages/syntax-rules",
