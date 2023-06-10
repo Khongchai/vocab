@@ -6,6 +6,7 @@ import {
   DidChangeConfigurationNotification,
   InitializeParams,
   InitializeResult,
+  SemanticTokens,
   TextDocumentSyncKind,
   TextDocuments,
   createConnection,
@@ -38,6 +39,14 @@ connection.onInitialize((params: InitializeParams) => {
     capabilities: {
       textDocumentSync: TextDocumentSyncKind.Incremental,
       // Tell the client that this server supports code completion.
+      semanticTokensProvider: {
+        legend: {
+          // TODO @khongchai these are temporary, number is for new words, and function for reviewed
+          tokenTypes: ["number", "function"],
+          tokenModifiers: [],
+        },
+        full: true,
+      },
       completionProvider: {
         resolveProvider: true,
       },

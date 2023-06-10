@@ -4,6 +4,7 @@ import {
   Connection,
   Diagnostic,
   DiagnosticSeverity,
+  SemanticTokensRequest,
   TextDocumentPositionParams,
   TextDocuments,
 } from "vscode-languageserver";
