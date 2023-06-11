@@ -9,11 +9,19 @@
       "request": "launch",
       "name": "Vocab Debug",
       "runtimeExecutable": "${execPath}",
+      "preLaunchTask": {
+        "type": "npm",
+        "script": "watch"
+      },
+      "autoAttachChildProcesses": true,
       "args": [
         "--extensionDevelopmentPath=${workspaceRoot}/packages/syntax-rules",
         "--extensionDevelopmentPath=${workspaceRoot}/packages/language-servers/node"
       ],
-      "autoAttachChildProcesses": true
+      "outFiles": [
+        "${workspaceFolder}/packages/language-servers/node/client/out/**/*.js",
+        "${workspaceFolder}/packages/language-servers/node/server/out/**/*.js"
+      ]
     }
   ]
 }

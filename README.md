@@ -9,6 +9,23 @@ Eventually, this repo will contains the full specs, the language server, and the
 
 All vocab files share the same syntax highlighter (vocab.de, vocab.en, vocab.*), the semantics of each langauge get processed instead in the langauge server.
 
+# Project Structure (as XML)
+
+```xml
+<project>
+    <language-client>
+        <language-server>
+            <parser/>  
+            <tokenizer/>
+        </language-server>
+    </language-client>
+    <syntax-highlighter/>
+</project>
+```
+
+My plan for this is to get everything working in typescript, and then experiment with different parser/tokenizer or an entire langauge server in other languages.
+
+
 # Sample Syntax
 
 ```vocab.de
@@ -30,6 +47,7 @@ This syntax might change in the future. It aims to be as human-readable as possi
 
 Should I decide to learn more languages in the future, maybe I'll do more extensions...
 
+
 ## Full example without comment
 ```
 27/05/2023
@@ -47,24 +65,7 @@ The difficulty here, I feel, is not the parsing, but the inflection detection. F
 ## Parsed Data
 The vocabulary for each day is parsed into the following data structure (example is in TypeScript).
 ```ts
-interface DailyVocab {
-    /**
-     * Self-explanatory
-     */
-    date: Date;
-    /**
-     * Word, phrase, sentence, etc.
-     */
-    newTokens: string[];
-    /**
-     * Word, phrase, sentence, etc.
-     */
-    reviewedTokens: string[];
-    /**
-     * All example sentences.
-     */
-    examples: string[];
-}
+// TODO
 ```
 
 ## Lexer Result
@@ -82,3 +83,5 @@ interface LexerResult {
      */
 }
 ```
+
+
