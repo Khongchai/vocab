@@ -4,11 +4,15 @@ import {
   Connection,
   Diagnostic,
   DiagnosticSeverity,
+  SemanticTokens,
+  SemanticTokensPartialResult,
   SemanticTokensRequest,
   TextDocumentPositionParams,
   TextDocuments,
+  uinteger,
 } from "vscode-languageserver";
 import { TextDocument } from "vscode-languageserver-textdocument";
+import { runSafe } from "./utils/runSafe";
 
 export default function handleEvents({
   connection,
@@ -136,5 +140,28 @@ export default function handleEvents({
       item.documentation = "JavaScript documentation";
     }
     return item;
+  });
+
+  connection.onRequest(SemanticTokensRequest.type, (params, token) => {
+    return runSafe(
+      async () => {
+        const document = documents.get(params.textDocument.uri);
+
+        if (document) {
+          return {
+            // [line, startChar, length, tokenType, tokenModifiers]
+            data: [1, 0, 10, 0, 0],
+          } as SemanticTokens;
+          //   return semanticTokensProvider.getSemanticTokens(
+          //     document,
+          //     params.ranges
+          //   );
+        }
+        return null;
+      },
+      null,
+      `Error while computing semantic tokens for ${params.textDocument.uri}`,
+      token
+    );
   });
 }

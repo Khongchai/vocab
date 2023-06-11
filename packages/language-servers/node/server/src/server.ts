@@ -3,10 +3,8 @@
  * Licensed under the MIT License. See License.txt in the project root for license information.
  * ------------------------------------------------------------------------------------------ */
 import {
-  DidChangeConfigurationNotification,
   InitializeParams,
   InitializeResult,
-  SemanticTokens,
   TextDocumentSyncKind,
   TextDocuments,
   createConnection,
@@ -42,7 +40,7 @@ connection.onInitialize((params: InitializeParams) => {
       semanticTokensProvider: {
         legend: {
           // TODO @khongchai these are temporary, number is for new words, and function for reviewed
-          tokenTypes: ["number", "function"],
+          tokenTypes: ["reviewedToken", "newToken"],
           tokenModifiers: [],
         },
         full: true,

@@ -9,6 +9,7 @@ import { workspace, ExtensionContext, languages } from "vscode";
 import {
   LanguageClient,
   LanguageClientOptions,
+  SemanticTokensRequest,
   ServerOptions,
   TransportKind,
 } from "vscode-languageclient/node";
