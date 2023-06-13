@@ -1,5 +1,4 @@
 import { TextDocument } from "vscode-languageserver-textdocument";
-import { VocabDocument } from "./scanner_and_parser";
 import { SemanticTokensReturnPattern } from "./types";
 
 export default class SemanticTokensProvider {
