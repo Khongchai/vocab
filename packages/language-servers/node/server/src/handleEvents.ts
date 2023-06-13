@@ -5,11 +5,9 @@ import {
   Diagnostic,
   DiagnosticSeverity,
   SemanticTokens,
-  SemanticTokensPartialResult,
   SemanticTokensRequest,
   TextDocumentPositionParams,
   TextDocuments,
-  uinteger,
 } from "vscode-languageserver";
 import { TextDocument } from "vscode-languageserver-textdocument";
 import { runSafe } from "./utils/runSafe";
@@ -52,6 +50,7 @@ export default function handleEvents({
 
   // The content of a text document has changed. This event is emitted
   // when the text document first opened or when its content has changed.
+  // TODO @khongchai, look at how to not parse the entire damn document.
   documents.onDidChangeContent((change) => {
     validateTextDocument(change.document);
   });
@@ -150,7 +149,7 @@ export default function handleEvents({
         if (document) {
           return {
             // [line, startChar, length, tokenType, tokenModifiers]
-            data: [1, 0, 10, 0, 0],
+            data: [4, 10, 8, 0, 0, 0, 9, 13, 1, 0],
           } as SemanticTokens;
           //   return semanticTokensProvider.getSemanticTokens(
           //     document,

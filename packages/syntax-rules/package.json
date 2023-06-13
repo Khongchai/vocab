@@ -10,6 +10,18 @@
     "Education"
   ],
   "contributes": {
+    "semanticTokenTypes": [
+      {
+        "id": "newVocab",
+        "superType": "operator",
+        "description": "Any newly-memorized token"
+      },
+      {
+        "id": "reviewedVocab",
+        "superType": "enumMember",
+        "description": "Any reviewed token"
+      }
+    ],
     "languages": [
       {
         "id": "vocab",

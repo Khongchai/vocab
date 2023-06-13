@@ -12,11 +12,15 @@ import {
 
 import { TextDocument } from "vscode-languageserver-textdocument";
 import handleEvents from "./handleEvents";
+import { tokenModifiers, tokenTypes as tokenTypes } from "./consts";
 
 const connection = createConnection();
 
 // Create a simple text document manager.
 const documents: TextDocuments<TextDocument> = new TextDocuments(TextDocument);
+
+console.log = connection.console.log.bind(connection.console);
+console.error = connection.console.error.bind(connection.console);
 
 let hasWorkspaceFolderCapability = false;
 let hasDiagnosticRelatedInformationCapability = false;
@@ -39,9 +43,8 @@ connection.onInitialize((params: InitializeParams) => {
       // Tell the client that this server supports code completion.
       semanticTokensProvider: {
         legend: {
-          // TODO @khongchai these are temporary, number is for new words, and function for reviewed
-          tokenTypes: ["reviewedToken", "newToken"],
-          tokenModifiers: [],
+          tokenTypes: tokenTypes,
+          tokenModifiers: tokenModifiers,
         },
         full: true,
       },

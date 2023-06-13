@@ -15,8 +15,10 @@ All vocab files share the same syntax highlighter (vocab.de, vocab.en, vocab.*),
 <project>
     <language-client>
         <language-server>
+        <parser>
             <parser/>  
             <tokenizer/>
+        </parser>
         </language-server>
     </language-client>
     <syntax-highlighter/>
@@ -25,6 +27,7 @@ All vocab files share the same syntax highlighter (vocab.de, vocab.en, vocab.*),
 
 My plan for this is to get everything working in typescript, and then experiment with different parser/tokenizer or an entire langauge server in other languages.
 
+Parser and tokenizer are separated because we can do something fun like both compiling to wasm with one written in C and the other in Rust or something.
 
 # Sample Syntax
 

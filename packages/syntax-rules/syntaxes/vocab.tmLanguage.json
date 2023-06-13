@@ -23,20 +23,20 @@
         {
           "comment": "A date of the pattern dd/mm/y+ demarcates a new section.",
           "match": "(0[1-9]|1[0-9]|2[0-9]|3[0-1])/(0[1-9]|1[0-9]|2[0-9]|3[0-1])/[1-9]([0-9]+)?",
-          "name": "variable.language.this.vocab"
+          "name": "variable.other.constant.vocab"
         },
         {
-          "include": "#new-words-or-phrases"
+          "include": "#new-tokens"
         },
         {
-          "include": "#reviewed-words-or-phrases"
+          "include": "#reviewed-tokens"
         },
         {
           "include": "#sentences"
         }
       ]
     },
-    "new-words-or-phrases": {
+    "new-tokens": {
       "begin": "(?<!>)>(?!>)",
       "beginCaptures": {
         "0": {
@@ -57,11 +57,11 @@
         {
           "comment": "Not a comma, not a space, unless it is a part of a word.",
           "match": "(?<=, |> ) ?[^,]+?(?=,|$)",
-          "name": "variable.other.constant.vocab"
+          "name": "keyword.operator.vocab"
         }
       ]
     },
-    "reviewed-words-or-phrases": {
+    "reviewed-tokens": {
       "begin": "(?<!>)>>(?!>)",
       "beginCaptures": {
         "0": {
@@ -81,7 +81,7 @@
         },
         {
           "match": "(?<=, |> ) ?[^,]+?(?=,|$)",
-          "name": "storage.type.vocab"
+          "name": "variable.other.enummember.vocab"
         }
       ]
     },
@@ -90,7 +90,7 @@
         {
           "comment": "This matches everything, so it should be at the very bottom",
           "match": ".*",
-          "name": "string.quoted.other"
+          "name": "string.quoted.other.vocab"
         }
       ]
     }

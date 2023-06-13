@@ -4,12 +4,11 @@
  * ------------------------------------------------------------------------------------------ */
 
 import * as path from "path";
-import { workspace, ExtensionContext, languages } from "vscode";
+import { ExtensionContext, workspace } from "vscode";
 
 import {
   LanguageClient,
   LanguageClientOptions,
-  SemanticTokensRequest,
   ServerOptions,
   TransportKind,
 } from "vscode-languageclient/node";
