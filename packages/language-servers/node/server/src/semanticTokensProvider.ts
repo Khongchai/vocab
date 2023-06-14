@@ -1,5 +1,6 @@
 import { TextDocument } from "vscode-languageserver-textdocument";
 import { SemanticTokensReturnPattern } from "./types";
+import { VocabDocument } from "@vocab/parser-node";
 
 export default class SemanticTokensProvider {
   getSemanticTokens(document: TextDocument): SemanticTokensReturnPattern {
@@ -11,7 +12,11 @@ export default class SemanticTokensProvider {
   }
 
   // TOOD @khongchai implement some kind of
-  private _parse(): VocabDocument {}
+  private _parse(): VocabDocument {
+    return {
+      sections: ,
+    }
+  }
 
   // TODO @khongchai continue here once parsing is done.
   private _getTokens(): SemanticTokensReturnPattern {}
