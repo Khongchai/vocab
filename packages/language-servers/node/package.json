@@ -1,12 +1,12 @@
 {
-  "name": "vocab-language-server",
+  "name": "@vocab/langauge-features",
   "description": "Vocab file language server",
   "author": "Microsoft Corporation",
   "license": "MIT",
   "version": "1.0.0",
   "repository": {
     "type": "git",
-    "url": "https://github.com/Khongchai/vocab.de"
+    "url": "https://github.com/Khongchai/vocab"
   },
   "publisher": "Khong",
   "categories": [],

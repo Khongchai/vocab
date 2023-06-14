@@ -1,5 +1,5 @@
 {
-  "name": "vocab",
+  "name": "@vocab/syntax-highlighting",
   "displayName": "Vocab",
   "description": "Syntax-highlighting for vocab files",
   "version": "0.0.1",

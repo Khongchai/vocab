@@ -30,7 +30,7 @@
     "singleQuote": true,
     "trailingComma": "es5"
   },
-  "name": "scanner",
+  "name": "@vocab/scanner-node",
   "author": "khongchai",
   "module": "dist/scanner.esm.js",
   "size-limit": [

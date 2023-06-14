@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "declaration": true,
+    "noEmit": false,
+    "paths": {
+      "@vocab/parser-node": ["./packages/parser/ts/dist"],
+      "@vocab/scanner-node": ["./packages/scanner/ts/dist"],
+      "@vocab/language-client": [
+        "./packages/language-servers/node/client/dist"
+      ],
+      "@vocab/language-server": ["./packages/language-servers/node/server/dist"]
+    },
+    "types": ["node"]
+  }
+}

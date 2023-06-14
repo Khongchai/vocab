@@ -31,6 +31,8 @@ export const enum VocabToken {
 }
 
 export class VocabScanner {
+  // TODO @khongchai fix this
+  // @ts-ignore
   private readonly document: TextDocument;
 
   constructor(document: TextDocument) {
