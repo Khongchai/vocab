@@ -1,6 +1,7 @@
 {
   // see https://www.typescriptlang.org/tsconfig to better understand tsconfigs
   "compilerOptions": {
+    "types": ["jest"],
     "outDir": "dist",
     "module": "esnext",
     "lib": ["dom", "esnext"],
@@ -26,6 +27,6 @@
     // error out if import and file system have a casing mismatch. Recommended by TS
     "forceConsistentCasingInFileNames": true
   },
-  "include": ["src/**/*", "types/**/*"],
+  "include": ["src/**/*", "types/**/*", "test"],
   "extends": "../../../tsconfig"
 }
