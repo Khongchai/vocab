@@ -1,4 +1,4 @@
-import { CharacterCodes, ScanError, VocabToken } from './consts';
+import { CharacterCodes, LineToken, ScanError, VocabToken } from "./consts";
 
 export interface Cursor {
   /**
@@ -17,6 +17,7 @@ export interface Cursor {
    */
   tokenValue: () => string;
   tokenLength: number;
+  lastLineToken: LineToken;
 }
 
 export class VocabScanner {
@@ -38,6 +39,7 @@ export class VocabScanner {
         const end = this.pos; // no need to + 1
         return text.substring(end - this.tokenLength, end);
       },
+      lastLineToken: LineToken.None,
     };
   }
 
@@ -69,6 +71,10 @@ export class VocabScanner {
     return this._text;
   }
 
+  getTokenLength(): number {
+    return this._c.tokenLength;
+  }
+
   *tokens(): Generator<VocabToken> {
     while (this._c.token != VocabToken.EOF) {
       this._readNextCharacter();
@@ -87,98 +93,75 @@ export class VocabScanner {
       return;
     }
 
-    let charCode = this._text.charCodeAt(this._c.pos);
-
-    if (this._isLineBreak(charCode)) {
-      const peeked = this._peek();
-      if (peeked && this._isLineBreak(peeked)) {
-        this._c.line++;
-        this._c.pos++;
-        this._c.error = ScanError.DoubleNewLine;
-        this._c.tokenLength = 2;
-      } else {
-        this._c.tokenLength = 1;
-      }
-
-      this._c.line++;
-      this._c.token = VocabToken.LineBreak;
-      this._c.pos++;
-      return;
+    // Fast skip if new line.
+    if (this._isLineBreak(this._text.charCodeAt(this._c.pos))) {
+      return this._handleLineBreak({
+        lastLineToken: this._c.lastLineToken,
+      });
     }
 
-    // Beginning of line and possibly a date.
-    // let column = this._c.column();
-    // if (column == 0 && this._isDigit(charCode)) {
-    //   let dateSection: 'dd' | 'mm' | 'yyyy' = 'dd';
+    const isFirstColumn = this._c.column() === 0;
 
-    //   do {
-    //     column++;
-    //     if (
-    //       this._text.charCodeAt(this._c.pos + column) === CharacterCodes.slash
-    //     ) {
-    //       column++; // skip slash
-    //       if (dateSection == 'dd') {
-    //         dateSection = 'mm';
-    //         continue;
-    //       }
+    // If that number is at the first line, or is a number that follows a bunch of examples, and
+    // the token at postiion + 2 after it is a slash, we can be quite certain that it is a date.
+    const isDateLine =
+      isFirstColumn &&
+      this._isDigit(this._text.charCodeAt(this._c.pos)) &&
+      [LineToken.None, LineToken.ExampleLine].includes(this._c.lastLineToken) &&
+      CharacterCodes.slash == this._peek(2);
 
-    //       if (dateSection === 'mm') {
-    //         dateSection = 'yyyy';
-    //         continue;
-    //       }
+    // We'll do just a simple validation: check if there are 2 slashes.
+    // the rest, we'll leave it to the parser
+    if (isDateLine) {
+      while (true) {
+        // TODO @khongchai continue parsing the date from here.
+      }
+    }
 
-    //       // if (dateSection === 'yyyy') {
-    //       //   this._c.error = ScanError.InvalidDateFormat;
-    //       //   this._c.token = VocabToken.Date;
-    //       // }
-    //     } else if (dateSection === 'yyyy') {
-    //     }
-    //   } while (this._isDigit(charCode));
-
-    //   // It should have returned already if valid.
-    //   this._c.error = ScanError.InvalidDateFormat;
-    //   this._c.token = VocabToken.Date;
-    // }
-
-    // switch (charCode) {
-    //   case CharacterCodes.rightShift:
-    //     const peeked = this._peek();
-    //     if (peeked == CharacterCodes.rightShift) {
-    //       return (this._c.token = VocabToken.DoubleRightShift);
-    //     }
-    //     return (this._c.token = VocabToken.RightShift);
-    //   case CharacterCodes.asterisk:
-    //     return (this._c.token = VocabToken.Aesterisk);
-    //   case CharacterCodes.comma:
-    //     return (this._c.token = VocabToken.Comma);
-    //   case CharacterCodes.hash:
-    //     return (this._c.token = VocabToken.Hash);
-    //   default:
-    //     if (this._isWhiteSpace(charCode)) {
-    //       do {
-    //         this._c.row++;
-    //         charCode = this._text.charCodeAt(this._c.row);
-    //       } while (this._isWhiteSpace(charCode));
-    //       return (this._c.token = this._readNextCharacter());
-    //     } else if (this._isLineBreak(charCode)) {
-    //       return this._handleLineBreak();
-    //     } else if (this._isDigit(charCode)) {
-    //       return this._handleDigit();
-    //     } else {
-    //       return this._handleCharacters();
-    //     }
-
-    //     break;
-    // }
+    const isVocabLine =
+      isFirstColumn &&
+      this._text.charCodeAt(this._c.pos) === CharacterCodes.rightShift;
+    if (isVocabLine) {
+      const peeked = this._peek();
+      if (!peeked) {
+        this._c.error = ScanError.UnexpectedCharacter;
+      }
+      const c = this._text.charCodeAt(peeked!);
+      if (this._isLineBreak(c)) {
+        return this._handleLineBreak({
+          lastLineToken: LineToken.NewVocabLine,
+        });
+      } else if (c === CharacterCodes.rightShift) {
+        return this._handleDoubleRightShift();
+      } else {
+        return this._handleRightShift();
+      }
+    }
   }
 
+  private _handleLineBreak({
+    lastLineToken,
+  }: {
+    lastLineToken: LineToken;
+  }): void {
+    this._c.tokenLength = 1;
+    this._c.lastLineToken = lastLineToken;
+
+    this._c.token = VocabToken.LineBreak;
+    this._c.line++;
+    this._c.pos++;
+    return;
+  }
+
+  private _handleDoubleRightShift(): void {}
+
+  private _handleRightShift(): void {}
+
   /**
-   * Don't forget to ++ after every peek.
-   *
    * @returns charCode or undefined if EOF
    */
-  private _peek(): number | undefined {
-    const peekedPos = this._c.pos + 1;
+  private _peek(amount = 1): number | undefined {
+    const peekedPos = this._c.pos + amount;
     if (peekedPos >= this._text.length) {
       return undefined;
     }
@@ -195,7 +178,7 @@ export class VocabScanner {
     );
   }
 
-  // private _isDigit(ch: number): boolean {
-  //   return ch >= CharacterCodes._0 && ch <= CharacterCodes._9;
-  // }
+  private _isDigit(ch: number): boolean {
+    return ch >= CharacterCodes._0 && ch <= CharacterCodes._9;
+  }
 }

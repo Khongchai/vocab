@@ -22,14 +22,34 @@ export const enum VocabToken {
   LineBreak,
   Space,
   DoubleRightShift,
-  Sentence,
+  Example,
   Unknown,
 }
 
+/**
+ * The current line. What is it. Are we parsing a line? A section of new vocab? etc.
+ *
+ * Due to the rather '(*&%{}}@)"-free syntax of this language, we need additional information of where the
+ * tokenization cursor is to help us make better decision about what we're parsing.
+ *
+ * This is a token that is updated only at newline char.
+ */
+export const enum LineToken {
+  /**
+   * Only for the initial state.
+   */
+  None,
+  DateLine,
+  NewVocabLine,
+  ReviewedVocabLine,
+  ExampleLine,
+}
+
 export const enum ScanError {
-  Keiner,
-  DoubleNewLine,
   InvalidDateFormat,
+  Keiner,
+  NewLineExpected,
+  UnexpectedCharacter,
 }
 
 export const enum CharacterCodes {

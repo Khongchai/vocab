@@ -1,6 +1,6 @@
-import '../../../parser/ts/dist';
-import { ScanError, VocabToken } from '../src/consts';
-import { VocabScanner } from '../src/scanner';
+import "../../../parser/ts/dist";
+import { ScanError, VocabToken } from "../src/consts";
+import { VocabScanner } from "../src/scanner";
 
 function assertTokens(
   text: string,
@@ -29,43 +29,63 @@ function assertTokens(
   expect(scanner.getPos()).toBe(text.length); // EOF is at text.length
 }
 
-describe('Simple tokens scan', () => {
-  it('Parses new line correctly', () => {
-    assertTokens('\n\n', {
-      token: VocabToken.LineBreak,
-      error: ScanError.DoubleNewLine,
-      tokenValue: '\n\n',
-    });
-    assertTokens('\r\r', {
-      token: VocabToken.LineBreak,
-      error: ScanError.DoubleNewLine,
-      tokenValue: '\r\r',
-    });
-    assertTokens('\n', {
-      tokenValue: '\n',
+describe("Simple tokens scan", () => {
+  it("New line parse", () => {
+    assertTokens("\n", {
+      tokenValue: "\n",
       token: VocabToken.LineBreak,
       error: ScanError.Keiner,
     });
-    assertTokens('\r', {
-      tokenValue: '\r',
+    assertTokens("\r", {
+      tokenValue: "\r",
       token: VocabToken.LineBreak,
       error: ScanError.Keiner,
     });
   });
 
-  // it('Parses date correctly', () => {
-  //   assertTokens('01/01/2023', {
-  //     error: ScanError.Keiner,
-  //     token: VocabToken.Date,
-  //   });
-  //   assertTokens('0/03/2021', {
-  //     error: {
-  //       type: ScanError.InvalidDateFormat,
-  //       pos: 1,
-  //     },
-  //     token: VocabToken.Date,
-  //   });
-  // });
+  // Tokenizer verify that the date conforms to the following format:
+  // dd/mm/yyyy
+  // Tokenizer just checks the string. The tokenizer will not check if the date is more than
+  // the month or if the month is less than 12, etc.
+  // The tokenizer will act like a simple regex machine.
+  // Therefore, the only date-parsing related error the tokenizer will throw is the invalidDateFormat error
+  it("Date parse", () => {
+    // Pass cases
+    assertTokens("31/01/2023", {
+      tokenValue: "31/01/2023",
+      error: ScanError.Keiner,
+      token: VocabToken.Date,
+    });
+    assertTokens("10/02/2023", {
+      tokenValue: "31/01/2023",
+      error: ScanError.Keiner,
+      token: VocabToken.Date,
+    });
+    assertTokens("1/02/2023", {
+      tokenValue: "1",
+      error: ScanError.InvalidDateFormat,
+      errorPos: 1,
+      token: VocabToken.Date,
+    });
+    assertTokens("100/02/2023", {
+      tokenValue: "10",
+      error: ScanError.InvalidDateFormat,
+      errorPos: 2,
+      token: VocabToken.Date,
+    });
+    assertTokens("02/02/20", {
+      tokenValue: "02/02/20",
+      error: ScanError.InvalidDateFormat,
+      errorPos: 8, // error at new line char after 20
+      token: VocabToken.Date,
+    });
+    assertTokens("20//", {
+      tokenValue: "20/",
+      error: ScanError.InvalidDateFormat,
+      errorPos: 3,
+      token: VocabToken.Date,
+    });
+  });
 
   // it('Scans token correctly', () => {
   //   assertTokens('>', VocabToken.RightShift);
@@ -91,4 +111,4 @@ describe('Simple tokens scan', () => {
 });
 
 // TODO @khognchai, give it a full section
-describe('Full parse', () => {});
+describe("Full parse", () => {});
