@@ -1,3 +1,15 @@
+/**
+ * A "vocab" (NewVocab, ReviewedVocab) represents a word, phrases, or sentences that a user memorizes on that day.
+ *
+ * For example, the following has three tokens, [Ant, Bird, Big Bird]
+ *
+ * ```vocab
+ * > Ant, Bird, Big Bird
+ *```
+ *
+ * Basically, a token is concluded when the scanner encounters a comma.
+ */
+
 export const enum VocabToken {
   Aesterisk,
   Comma,
@@ -17,6 +29,7 @@ export const enum VocabToken {
 export const enum ScanError {
   Keiner,
   DoubleNewLine,
+  InvalidDateFormat,
 }
 
 export const enum CharacterCodes {
