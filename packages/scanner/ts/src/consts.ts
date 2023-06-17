@@ -1,3 +1,24 @@
+export const enum VocabToken {
+  Aesterisk,
+  Comma,
+  EOF,
+  Date,
+  Hash,
+  NewVocab,
+  ReviewedVocab,
+  RightShift,
+  LineBreak,
+  Space,
+  DoubleRightShift,
+  Sentence,
+  Unknown,
+}
+
+export const enum ScanError {
+  Keiner,
+  DoubleNewLine,
+}
+
 export const enum CharacterCodes {
   lineFeed = 0x0a, // \n
   carriageReturn = 0x0d, // \r
